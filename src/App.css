@@ -160,13 +160,17 @@ ul {
 
 @media (max-width: 520px) {
 
+  body {
+    font-size: 0.8rem;
+  }
+
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 30%;
-    max-width: 95%;
     height: auto;
+    padding: 2rem;
   }
 
   .heading h1 {
@@ -184,5 +188,6 @@ ul {
   .form input{
     width: 70%;
   }
+
 
 }
