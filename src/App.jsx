@@ -46,26 +46,23 @@ function App() {
     };
   };
 
-  const startDrawing = (e) => {
-    if (e.buttons === 1) {
-      drawing = true;
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-      context.beginPath();
-      drawingNumber ++;
-    }
-    rectStart = getMousePos(canvas, e);
-  };
+  const startDrawing = (isTouch) => (e) => {
+    const drawCanvas = drawCanvasRef.current;
+    const context = drawCanvas.getContext('2d');
 
-  const startTouchDrawing = (e) => {
-    if (e.touches.length === 1) {
-      drawing = true;
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-      context.beginPath();
-      drawingNumber ++;
+    drawing = true;
+    let position;
+
+    context.beginPath();
+    drawingNumber ++;
+
+    if (isTouch) {
+      position = getTouchPos(drawCanvas, e);
+    } else {
+      position = getMousePos(drawCanvas, e);
     }
-    rectStart = getTouchPos(canvas, e);
+
+    rectStart = position;
   };
 
   const endDrawing = () => {
@@ -79,18 +76,7 @@ function App() {
     }
   };
 
-  const endTouchDrawing = () => {
-    if (drawing) {
-      drawing = false;
-      const drawCanvas = drawCanvasRef.current;
-      const displayCanvas = displayCanvasRef.current;
-      const displayContext = displayCanvas.getContext('2d');
-      displayContext.drawImage(drawCanvas, 0, 0);
-      drawingHistory.push(canvas.toDataURL());
-    }
-  };
-
-  const draw = (e) => {
+  const draw = (isTouch) => (e) => {
     if (!drawing) return;
 
     if(document.getElementById('pen').checked) {
@@ -100,9 +86,17 @@ function App() {
     if (square.checked) {
       const drawCanvas = drawCanvasRef.current;
       const context = drawCanvas.getContext('2d');
-  
-      let { x, y } = getMousePos(drawCanvas, e);
-  
+
+      let position;
+
+      if (isTouch) {
+        position = getTouchPos(drawCanvas, e);
+      } else {
+        position = getMousePos(drawCanvas, e);
+      }
+      
+      let { x , y } = position;
+
       const width = x - rectStart.x;
       const height = y - rectStart.y;
   
@@ -113,8 +107,16 @@ function App() {
 
       const drawCanvas = drawCanvasRef.current;
       const context = drawCanvas.getContext('2d');
+      
+      let position;
 
-      const { x, y } = getMousePos(canvas, e);
+      if (isTouch) {
+        position = getTouchPos(drawCanvas, e);
+      } else {
+        position = getMousePos(drawCanvas, e);
+      }
+      
+      let { x , y } = position;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -135,7 +137,15 @@ function App() {
       const drawCanvas = drawCanvasRef.current;
       const context = drawCanvas.getContext('2d');
       
-      const { x, y } = getMousePos(canvas, e);
+      let position;
+
+      if (isTouch) {
+        position = getTouchPos(drawCanvas, e);
+      } else {
+        position = getMousePos(drawCanvas, e);
+      }
+      
+      let { x , y } = position;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -162,87 +172,17 @@ function App() {
       
       const drawCanvas = drawCanvasRef.current;
       const context = drawCanvas.getContext('2d');
-      let { x, y } = getMousePos(drawCanvas, e);
-  
-      context.lineTo(x, y);
-      context.stroke();
-    }
-  };
-
-  const touchDraw = (e) => {
-    if (!drawing) return;
-
-    if(document.getElementById('pen').checked) {
-      colorPicker();
-    }
-
-    if (square.checked) {
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-  
-      let { x, y } = getTouchPos(drawCanvas, e);
-  
-      const width = x - rectStart.x;
-      const height = y - rectStart.y;
-  
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.strokeRect(rectStart.x, rectStart.y, width, height);
-
-    } else if (ellipse.checked) {
-
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-
-      const { x, y } = getTouchPos(canvas, e);
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      const width = x - rectStart.x;
-      const height = y - rectStart.y;
-  
-      const centerX = rectStart.x + width / 2;
-      const centerY = rectStart.y + height / 2;
-      const radiusX = Math.abs(width / 2);
-      const radiusY = Math.abs(height / 2);
-  
-      context.beginPath();
-      context.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
-      context.stroke();
-
-    } else if (triangle.checked) {
-
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
       
-      const { x, y } = getTouchPos(canvas, e);
+      let position;
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      const sideLength = Math.sqrt(Math.pow(x - rectStart.x, 2) + Math.pow(y - rectStart.y, 2));
-
-      const angle = Math.atan2(y - rectStart.y, x - rectStart.x);
-
-      const angleOffset = Math.PI / 9;
-
-      const x2 = rectStart.x + sideLength * Math.cos(angle + angleOffset);
-      const y2 = rectStart.y + sideLength * Math.sin(angle + angleOffset);
-
-      const x3 = rectStart.x + sideLength * Math.cos(angle - angleOffset);
-      const y3 = rectStart.y + sideLength * Math.sin(angle - angleOffset);
-
-      context.beginPath();
-      context.moveTo(rectStart.x, rectStart.y);
-      context.lineTo(x2, y2);
-      context.lineTo(x3, y3);
-      context.closePath();
-      context.stroke();
-
-    } else {
-      
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-      let { x, y } = getTouchPos(drawCanvas, e);
+      if (isTouch) {
+        position = getTouchPos(drawCanvas, e);
+      } else {
+        position = getMousePos(drawCanvas, e);
+      }
   
+      let { x , y } = position;
+
       context.lineTo(x, y);
       context.stroke();
     }
@@ -393,12 +333,12 @@ function App() {
             id="canvas"
             height="1080"
             width="1920"
-            onMouseDown={startDrawing}
+            onMouseDown={startDrawing(false)}
             onMouseUp={endDrawing}
-            onMouseMove={draw}
-            onTouchStart={startTouchDrawing}
-            onTouchMove={touchDraw}
-            onTouchCancel={endTouchDrawing}
+            onMouseMove={draw(false)}
+            onTouchStart={startDrawing(true)}
+            onTouchMove={draw(true)}
+            onTouchCancel={endDrawing}
           >
           </canvas>
           <canvas
