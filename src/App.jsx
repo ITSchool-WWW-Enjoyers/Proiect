@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import { signal } from '@preact/signals';
 import Undo from './Components/Undo';
 import Redo from './Components/Redo';
@@ -13,6 +13,18 @@ function App() {
   const drawCanvasRef = useRef(null);
   const displayCanvasRef = useRef(null);
 
+  const getContext = useCallback(() => {
+    const drawCanvas = drawCanvasRef.current;
+    const context = drawCanvas.getContext('2d');
+    return { drawCanvas, context };
+  }, [drawCanvasRef]);
+
+  const getContextDisplay = useCallback(() => {
+    const displayCanvas = displayCanvasRef.current;
+    const displayContext = displayCanvas.getContext('2d');
+    return { displayCanvas, displayContext };
+  }, [displayCanvasRef]);
+
   let drawing = signal();
   drawing = false;
 
@@ -22,7 +34,7 @@ function App() {
   let drawingNumber = 0;
   let checkNumber = 0;
 
-  let rectStart = signal({x: 0, y:0});
+  let rectStart;
 
   const getMousePos = (canvas, e) => {
     const rect = canvas.getBoundingClientRect();
@@ -47,12 +59,15 @@ function App() {
   };
 
   const startDrawing = (isTouch) => (e) => {
-    const drawCanvas = drawCanvasRef.current;
-    const context = drawCanvas.getContext('2d');
+    if(!isTouch && e.buttons !== 1) {
+      return;
+    }
 
-    drawing = true;
+    const { drawCanvas, context } = getContext();
+
     let position;
-
+  
+    drawing = true;
     context.beginPath();
     drawingNumber ++;
 
@@ -68,13 +83,65 @@ function App() {
   const endDrawing = () => {
     if (drawing) {
       drawing = false;
-      const drawCanvas = drawCanvasRef.current;
-      const displayCanvas = displayCanvasRef.current;
-      const displayContext = displayCanvas.getContext('2d');
+
+      const { drawCanvas } = getContext();
+      const { displayContext } = getContextDisplay();
+
       displayContext.drawImage(drawCanvas, 0, 0);
       drawingHistory.push(canvas.toDataURL());
     }
   };
+
+  const drawRectangle = (x, y) => {
+    const { context } = getContext();
+
+    const width = x - rectStart.x;
+    const height = y - rectStart.y;
+  
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.strokeRect(rectStart.x, rectStart.y, width, height);
+  };
+
+  const drawEllipse = (x, y) => {
+    const { context } = getContext();
+
+    const width = x - rectStart.x;
+    const height = y - rectStart.y;
+
+    const centerX = rectStart.x + width / 2;
+    const centerY = rectStart.y + height / 2;
+    const radiusX = Math.abs(width / 2);
+    const radiusY = Math.abs(height / 2);
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.beginPath();
+    context.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+    context.stroke();
+  }
+
+  const drawTriangle = (x, y) => {
+    const { context } = getContext();
+
+    const sideLength = Math.sqrt(Math.pow(x - rectStart.x, 2) + Math.pow(y - rectStart.y, 2));
+
+    const angle = Math.atan2(y - rectStart.y, x - rectStart.x);
+
+    const angleOffset = Math.PI / 9;
+
+    const x2 = rectStart.x + sideLength * Math.cos(angle + angleOffset);
+    const y2 = rectStart.y + sideLength * Math.sin(angle + angleOffset);
+
+    const x3 = rectStart.x + sideLength * Math.cos(angle - angleOffset);
+    const y3 = rectStart.y + sideLength * Math.sin(angle - angleOffset);
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.beginPath();
+    context.moveTo(rectStart.x, rectStart.y);
+    context.lineTo(x2, y2);
+    context.lineTo(x3, y3);
+    context.closePath();
+    context.stroke();
+  }
 
   const draw = (isTouch) => (e) => {
     if (!drawing) return;
@@ -83,136 +150,54 @@ function App() {
       colorPicker();
     }
 
+    const { drawCanvas, context } = getContext();
+
+    let position;
+
+    if (isTouch) {
+      position = getTouchPos(drawCanvas, e);
+    } else {
+      position = getMousePos(drawCanvas, e);
+    }
+      
+    let { x , y } = position;
+
     if (square.checked) {
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-
-      let position;
-
-      if (isTouch) {
-        position = getTouchPos(drawCanvas, e);
-      } else {
-        position = getMousePos(drawCanvas, e);
-      }
-      
-      let { x , y } = position;
-
-      const width = x - rectStart.x;
-      const height = y - rectStart.y;
-  
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.strokeRect(rectStart.x, rectStart.y, width, height);
-
+      drawRectangle(x, y);
+    
     } else if (ellipse.checked) {
-
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-      
-      let position;
-
-      if (isTouch) {
-        position = getTouchPos(drawCanvas, e);
-      } else {
-        position = getMousePos(drawCanvas, e);
-      }
-      
-      let { x , y } = position;
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      const width = x - rectStart.x;
-      const height = y - rectStart.y;
-  
-      const centerX = rectStart.x + width / 2;
-      const centerY = rectStart.y + height / 2;
-      const radiusX = Math.abs(width / 2);
-      const radiusY = Math.abs(height / 2);
-  
-      context.beginPath();
-      context.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
-      context.stroke();
+      drawEllipse(x,y);
 
     } else if (triangle.checked) {
-
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-      
-      let position;
-
-      if (isTouch) {
-        position = getTouchPos(drawCanvas, e);
-      } else {
-        position = getMousePos(drawCanvas, e);
-      }
-      
-      let { x , y } = position;
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      const sideLength = Math.sqrt(Math.pow(x - rectStart.x, 2) + Math.pow(y - rectStart.y, 2));
-
-      const angle = Math.atan2(y - rectStart.y, x - rectStart.x);
-
-      const angleOffset = Math.PI / 9;
-
-      const x2 = rectStart.x + sideLength * Math.cos(angle + angleOffset);
-      const y2 = rectStart.y + sideLength * Math.sin(angle + angleOffset);
-
-      const x3 = rectStart.x + sideLength * Math.cos(angle - angleOffset);
-      const y3 = rectStart.y + sideLength * Math.sin(angle - angleOffset);
-
-      context.beginPath();
-      context.moveTo(rectStart.x, rectStart.y);
-      context.lineTo(x2, y2);
-      context.lineTo(x3, y3);
-      context.closePath();
-      context.stroke();
+      drawTriangle(x,y);
 
     } else {
       
-      const drawCanvas = drawCanvasRef.current;
-      const context = drawCanvas.getContext('2d');
-      
-      let position;
-
-      if (isTouch) {
-        position = getTouchPos(drawCanvas, e);
-      } else {
-        position = getMousePos(drawCanvas, e);
-      }
-  
-      let { x , y } = position;
-
       context.lineTo(x, y);
       context.stroke();
-    }
-  };
+    };
+  }
 
   const eraser = () => {
-    const drawCanvas = drawCanvasRef.current;
-    const context = drawCanvas.getContext('2d');
+    const { context } = getContext();
     context.strokeStyle = "white";
     context.fillStyle = "white";
   }
 
   const strokeSize = () => {
-    const drawCanvas = drawCanvasRef.current;
-    const context = drawCanvas.getContext('2d');
+    const { context } = getContext();
     context.lineWidth = document.getElementById('lineWidth').value;
   }
 
   const colorPicker = () => {
-    const drawCanvas = drawCanvasRef.current;
-    const context = drawCanvas.getContext('2d');
+    const { context } = getContext();
     context.strokeStyle = document.getElementById('color-picker').value;
     context.fillStyle = document.getElementById('color-picker').value;
   }
 
   const fillCanvas = () => {
-    const drawCanvas = drawCanvasRef.current;
-    const context = drawCanvas.getContext('2d');
-    const displayCanvas = displayCanvasRef.current;
-    const displayContext = displayCanvas.getContext('2d');
+    const { context, drawCanvas } = getContext();
+    const { displayContext } = getContextDisplay();
     colorPicker();
     context.fillRect(0, 0, canvas.width, canvas.height);
     displayContext.drawImage(drawCanvas, 0, 0);
@@ -221,10 +206,8 @@ function App() {
   }
 
   const resetCanvas = () => {
-    const drawCanvas = drawCanvasRef.current;
-    const context = drawCanvas.getContext('2d');
-    const displayCanvas = displayCanvasRef.current;
-    const displayContext = displayCanvas.getContext('2d');
+    const { context } = getContext();
+    const { displayCanvas, displayContext } = getContextDisplay();
     drawingHistory.push(displayCanvas.toDataURL());
     context.reset();
     displayContext.reset();
@@ -234,13 +217,10 @@ function App() {
   }
 
   const undo = () => {
-    const drawCanvas = drawCanvasRef.current;
-    const context = drawCanvas.getContext('2d');
-    const displayCanvas = displayCanvasRef.current;
-    const displayContext = displayCanvas.getContext('2d');
+    const { context } = getContext();
+    const { displayCanvas, displayContext } = getContextDisplay();
 
     checkNumber = drawingNumber;
-    console.log(checkNumber, drawingNumber)
     redoStates.push(displayCanvas.toDataURL());
 
     if(drawingHistory.length > 0) {
@@ -261,10 +241,8 @@ function App() {
       redoStates = [];
     }
 
-    const drawCanvas = drawCanvasRef.current;
-    const context = drawCanvas.getContext('2d');
-    const displayCanvas = displayCanvasRef.current;
-    const displayContext = displayCanvas.getContext('2d');
+    const { context } = getContext();
+    const { displayContext } = getContextDisplay();
 
     drawingHistory.push(canvas.toDataURL());
 
@@ -298,34 +276,27 @@ function App() {
       };
   });
 
-  window.addEventListener("mouseup", endDrawing);
-  window.addEventListener("touchend", endDrawing);
-
+  useEffect(() => {
+    window.addEventListener("mouseup", endDrawing);
+    window.addEventListener("touchend", endDrawing);
+  }, []);
+  
   return (
     <>
       <div className="container">
         <div className='toolbar'>
-          <Undo
-            undoHandler={undo}></Undo>
-          <Redo
-            redoHandler={redo}>
-          </Redo>
-          <Reset
-            resetHandler={resetCanvas}
-          >  
-          </Reset>
-          <PenTools
+          <Undo undoHandler={undo}/>
+          <Redo redoHandler={redo}/>
+          <Reset resetHandler={resetCanvas} />  
+          <PenTools 
             rangeHandler={strokeSize}
             eraserHandler={eraser}
-          >
-          </PenTools>
-          <ShapeTools>
-          </ShapeTools>
+          />
+          <ShapeTools/>
           <ColorTools
           colorHandler={colorPicker}
           fillHandler={fillCanvas}
-          >
-          </ColorTools>
+          />
         </div>
         <div className="wrapper">
           <canvas
@@ -339,15 +310,13 @@ function App() {
             onTouchStart={startDrawing(true)}
             onTouchMove={draw(true)}
             onTouchCancel={endDrawing}
-          >
-          </canvas>
+          />
           <canvas
             ref={displayCanvasRef}
             id="display-canvas"
             height="1080"
             width="1920"
-          >
-          </canvas>
+          />
         </div>
       </div>
     </>
