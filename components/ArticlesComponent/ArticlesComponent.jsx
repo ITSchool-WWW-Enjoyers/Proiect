@@ -54,7 +54,7 @@ export const ArticlesComponent = () => {
                             {
                                 posts.map((post) =>
                                     <div key={post.id} className={styles.post}>
-                                        <button onClick={() => removeArticle(post.id)} className={styles.remove}>X</button>
+                                        {/* <button onClick={() => removeArticle(post.id)} className={styles.remove}>X</button> */}
                                         <p className={styles.postTitle}>{post.title}</p>
                                         <p className={styles.postBody}>{post.body}</p>
                                     </div>)
