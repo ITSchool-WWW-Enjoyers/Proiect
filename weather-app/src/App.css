@@ -1,0 +1,23 @@
+.card-title{
+  text-align: center;
+}
+
+.condition{
+  text-align: center;
+  margin-block-start: -20px;
+}
+
+.condition-forecast{
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.temp{
+  text-align: center;
+  font-size: 4rem;
+}
+
+.temp-forecast{
+  text-align: center;
+  font-size: 1.8rem;
+}
