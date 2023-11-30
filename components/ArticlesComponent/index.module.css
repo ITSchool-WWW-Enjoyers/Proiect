@@ -1,0 +1,37 @@
+.postsContainer {
+    display: flex;
+    gap: 3rem;
+    flex-direction: row;
+    margin: 5rem;
+    flex-wrap: wrap;
+}
+
+.post {
+    width: 100%;
+    background-color: black;
+    border: 1px solid white;
+    padding: 1rem;
+    width: 20rem;
+    border-radius: 1rem;
+}
+
+.postTitle {
+    color: rgb(0, 255, 179);
+    font-size: 1.5rem;
+    margin: 1rem;
+    font-weight: bold;
+}
+
+.postBody {
+    font-style: italic;
+}
+
+.remove {
+    float: right;
+}
+
+.loading {
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+}

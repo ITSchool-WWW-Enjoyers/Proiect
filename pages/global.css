@@ -1,0 +1,49 @@
+html,
+body {
+    padding: 0;
+    margin: 0; 
+    background-color: rgba(6, 7, 8, 0.974);
+}
+
+.header {
+    margin: 2rem;
+    background-color: rgb(0, 255, 179);
+    padding: 2rem;
+}
+
+.wrapper {
+    margin: 3rem 5rem;
+    background-color: rgba(11, 2, 2, 0.971);
+    width: auto;
+    padding: 2rem;
+    color: white;
+    font-size: 2rem;
+    border: solid rgb(0, 255, 179);
+}
+
+.content {
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+   
+}
+/* https://www.w3schools.com/cssref/sel_all.php */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing */
+/* * {
+    box-sizing: border-box;
+} */
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* img {
+    max-width: 100%;
+    display: block;
+} */
