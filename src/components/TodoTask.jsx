@@ -1,81 +1,37 @@
 import React, {useState} from 'react';
-import { FaRegCheckCircle } from "react-icons/fa";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { FaRegEdit } from "react-icons/fa";
+import EditingTemplate from './EditingTemplate';
+import ViewTemplate from './ViewTemplate';
 
-export default function TodoTask({text, onDeleteTask, onEditTask, id}) {
+export default function TodoTask({id, text, onDeleteTask, onEditTask}) {
     
     const [isEditing, setEditing] = useState(false);
-    const [newInputText, setNewInputText] = useState("");
-    const [isDone, setIsDone] = useState(false);
 
-    function handleChange(event) {
-        setNewInputText(event.target.value);
+    function hideEditingTemplate () {
+        setEditing(false);
     }
 
-    function handleSubmit (event) {
-        event.preventDefault();
-    };
-
-    function handleClick () {
-        setIsDone(!isDone);
+    function showEditingTemplate () {
+        setEditing(true);
     }
-
-    const editingTemplate = (
-        <div className="edit-form">
-            <form onSubmit={handleSubmit}>
-                <input 
-                    onChange={handleChange}
-                    type="text" 
-                    value={newInputText}
-                />
-                <button 
-                    className="edit-button"
-                    type="submit"
-                    onClick={() => {
-                        if (newInputText !== "") {
-                            onEditTask(id, newInputText);
-                            setEditing(false);
-                        }
-                    }}
-                >
-                <span>Edit</span>
-                </button>
-            </form>
-        </div>
-    );
-
-    const viewTemplate = (
-        <div className="task-container">
-            <div style={{textDecoration: isDone ? "line-through red" : "none"}}>
-                {text}
-            </div>
-            <div className='btn-group'>
-                <FaRegCheckCircle
-                    className="check-btn"
-                    onClick={handleClick}
-                />
-                <FaRegEdit
-                    className="edit-btn"
-                    onClick={() => { 
-                        setEditing(true);
-                        setNewInputText(text);
-                    }}
-                />
-                <RiDeleteBinLine 
-                    className="delete-btn"
-                    onClick={() => {
-                        onDeleteTask(id)
-                    }}
-                />
-            </div>
-        </div>
-    );
 
     return (
         <>
             <li>
-                {isEditing ? editingTemplate : viewTemplate}
+                {isEditing ? (
+                    <EditingTemplate
+                        id={id}
+                        previousTask={text}
+                        onEditTask={onEditTask}
+                        onHideEditingTemplate={hideEditingTemplate}
+                    />
+                ) : (
+                    <ViewTemplate
+                        id={id}
+                        text={text}
+                        onDeleteTask={onDeleteTask}
+                        onShowEditingTemplate={showEditingTemplate}
+                    />
+                )}
             </li>
         </>
     );
