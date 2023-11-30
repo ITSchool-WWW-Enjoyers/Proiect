@@ -33,7 +33,7 @@ export default function InputArea({addTask}) {
                             }
                         }}
                     >
-                    <span>Add</span>
+                        <span>Add</span>
                     </button>
                 </form>
             </div>

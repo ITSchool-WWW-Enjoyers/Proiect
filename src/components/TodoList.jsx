@@ -1,7 +1,7 @@
 import React from 'react'
 import TodoTask from './TodoTask';
 
-export default function TodoList({tasks, deleteTask, editTask}) {
+export default function TodoList({tasks, onDeleteTask, onEditTask}) {
   return (
     <> 
         <div className="list-container">
@@ -12,8 +12,8 @@ export default function TodoList({tasks, deleteTask, editTask}) {
                             key={index} 
                             id={index}
                             text={task}
-                            deleteTask={deleteTask}
-                            editTask={editTask}
+                            onDeleteTask={onDeleteTask}
+                            onEditTask={onEditTask}
                         />
                     )
                 })}

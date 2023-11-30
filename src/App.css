@@ -168,7 +168,8 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 30%;
+    width: 100%;
+    min-width: 15rem;
     height: auto;
     padding: 2rem;
   }

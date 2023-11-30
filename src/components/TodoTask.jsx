@@ -3,7 +3,7 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 
-export default function TodoTask({text, deleteTask, editTask, id}) {
+export default function TodoTask({text, onDeleteTask, onEditTask, id}) {
     
     const [isEditing, setEditing] = useState(false);
     const [newInputText, setNewInputText] = useState("");
@@ -34,7 +34,7 @@ export default function TodoTask({text, deleteTask, editTask, id}) {
                     type="submit"
                     onClick={() => {
                         if (newInputText !== "") {
-                            editTask(id, newInputText);
+                            onEditTask(id, newInputText);
                             setEditing(false);
                         }
                     }}
@@ -47,7 +47,7 @@ export default function TodoTask({text, deleteTask, editTask, id}) {
 
     const viewTemplate = (
         <div className="task-container">
-            <div style={{textDecoration: isDone ? "line-through" : "none"}}>
+            <div style={{textDecoration: isDone ? "line-through red" : "none"}}>
                 {text}
             </div>
             <div className='btn-group'>
@@ -65,7 +65,7 @@ export default function TodoTask({text, deleteTask, editTask, id}) {
                 <RiDeleteBinLine 
                     className="delete-btn"
                     onClick={() => {
-                        deleteTask(id)
+                        onDeleteTask(id)
                     }}
                 />
             </div>

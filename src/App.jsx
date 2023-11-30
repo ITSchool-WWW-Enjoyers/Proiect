@@ -58,8 +58,8 @@ export default function App() {
         />
         <TodoList 
           tasks={tasks}
-          deleteTask={deleteTask}
-          editTask={editTask}
+          onDeleteTask={deleteTask}
+          onEditTask={editTask}
         />
       </div>
     </>
