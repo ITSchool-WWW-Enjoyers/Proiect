@@ -1,0 +1,119 @@
+$primary: #150080;
+$accent: #d08642;
+$bg: #ffffff;
+$bg-accent: #e7e8e9;
+$disabled: #c91111;
+$foreground: #2d264b;
+
+body {
+  font-family: monospace;
+  background: linear-gradient(0deg, $primary 0.03%, $accent);
+  color: $foreground;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100vh;
+}
+
+.quiz-container {
+  width: 32rem;
+  background: $bg;
+  border-radius: 0.3rem;
+  margin-top: 1.25rem;
+  padding: 2rem 4rem;
+  box-sizing: border-box;
+}
+
+.size-question {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.question {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;;
+}
+
+label {
+  cursor: pointer;
+}
+
+input {
+   margin: 1rem;
+   display: block;
+   visibility:hidden;
+}
+
+.selected-answer {
+  color: $foreground;
+  font-size: 1rem;
+  background: $bg;
+  border: 1px solid $disabled;
+  border-radius: 1rem;
+  padding: 0.7rem;
+  margin-top: 1rem;
+  background: $primary ;
+  border: 1px solid $accent ; 
+  color: $bg ;
+}
+
+button{
+  margin-top: 1rem;
+  cursor: pointer;
+  padding: 0.8rem 2.4rem;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.button{
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.next-button {
+  background: linear-gradient(0deg, $primary 0.03%, $accent) ;
+  color: $bg;
+
+  &:disabled {
+    background: $bg-accent;
+    color:$disabled;
+    cursor: not-allowed;
+  }
+}
+
+.reset-button:hover{ 
+  background: linear-gradient(0deg, $primary 0.03%, $accent) ;
+  color: $bg;
+}
+// result
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5rem;
+  background-color: #ffffff ;
+  border-radius: 0.5rem;
+}
+
+.result{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem
+}
+
+h2{
+  font-size: 2rem;
+  letter-spacing: 0.09rem;
+  text-align: center;
+}
+
+p {
+  color: $primary;
+  font-size: 1.2rem;
+}
