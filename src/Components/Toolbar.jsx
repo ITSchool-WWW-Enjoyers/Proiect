@@ -1,5 +1,4 @@
-import { useDrawingContext } from '../Contexts/DrawingContext';
-import './Toolbar.scss';
+import { DrawingContext } from '../Contexts/DrawingContext';
 import undosvg from '../assets/undo.svg';
 import redosvg from '../assets/redo.svg';
 import resetsvg from '../assets/reset.svg';
@@ -9,10 +8,12 @@ import square from '../assets/squareshape.svg';
 import ellipse from '../assets/ellipseshape.svg';
 import triangle from '../assets/triangleshape.svg';
 import filltool from '../assets/filltool.svg';
+import './GlobalButtons.scss';
+import { useContext } from 'react';
 
 function Toolbar() {
 
-    const { undo, redo, resetCanvas, strokeSize , eraser, colorPicker, fillCanvas } = useDrawingContext();
+    const { undo, redo, resetCanvas, strokeSize , eraser, colorPicker, fillCanvas } = useContext(DrawingContext);
 
     return (
         <>
@@ -64,7 +65,6 @@ function Toolbar() {
                     className="draw-image" 
                     src={erasersvg}
                     alt="Eraser Tool"
-                    id="eraser-tool"
                 >
                 </img>
             </label>
@@ -74,7 +74,7 @@ function Toolbar() {
                     id="lineWidth"
                     type="range"
                     min="1"
-                    max="15"
+                    max="25"
                     defaultValue={1}
                     onChange={strokeSize}
                 >

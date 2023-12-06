@@ -1,4 +1,4 @@
-import { createContext, useRef, useCallback, useContext } from "react";
+import { createContext, useRef, useCallback } from "react";
 
 export const DrawingContext = createContext();
 
@@ -9,7 +9,6 @@ export const canvasRef = () => {
     const getContext = useCallback(() => {
         const drawCanvas = drawCanvasRef.current;
         const context = drawCanvas.getContext('2d');
-        context.lineCap = "round";
         return { drawCanvas, context };
       }, [drawCanvasRef]);
     
@@ -22,9 +21,6 @@ export const canvasRef = () => {
     return { drawCanvasRef , displayCanvasRef, getContext, getContextDisplay }
 }
 
-export const useDrawingContext = () => {
-  return useContext(DrawingContext);
-};
 
 
 

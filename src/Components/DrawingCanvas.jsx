@@ -1,7 +1,8 @@
-import './DrawingCanvas.scss';
-import { canvasRef, DrawingContext } from '../Contexts/DrawingContext';
+import './GlobalButtons.scss';
+import { canvasRef } from '../Contexts/DrawingContext';
 import { useEffect } from 'react';
 import { signal } from '@preact/signals';
+import { DrawingContext } from '../Contexts/DrawingContext';
 import Toolbar from './Toolbar';
 
 function DrawingCanvas() { 
@@ -18,12 +19,6 @@ function DrawingCanvas() {
     
       let rectStart;
     
-      const colorPicker = () => {
-        const { context } = getContext();
-        context.strokeStyle = document.getElementById('color-picker').value;
-        context.fillStyle = document.getElementById('color-picker').value;
-      }
-
       const getMousePos = (drawCanvasRef, e) => {
         const rect = drawCanvasRef.getBoundingClientRect();
         const scaleX = drawCanvasRef.width / rect.width;
@@ -177,6 +172,12 @@ function DrawingCanvas() {
         context.lineWidth = document.getElementById('lineWidth').value;
       }
     
+      const colorPicker = () => {
+        const { context } = getContext();
+        context.strokeStyle = document.getElementById('color-picker').value;
+        context.fillStyle = document.getElementById('color-picker').value;
+      }
+    
       const fillCanvas = () => {
         const { context, drawCanvas } = getContext();
         const { displayContext } = getContextDisplay();
@@ -240,7 +241,7 @@ function DrawingCanvas() {
           });
         };
       };
-
+    
       window.addEventListener("keydown", (ev) => {
         if (ev.key === "z" && ev.ctrlKey) {
             undo();
@@ -267,7 +268,7 @@ function DrawingCanvas() {
     return (
         <>
           <DrawingContext.Provider value={{undo , redo , resetCanvas, strokeSize , eraser, colorPicker, fillCanvas}}>
-            <Toolbar/>
+            <Toolbar></Toolbar>
             <div className="wrapper">
                 <canvas
                 ref={drawCanvasRef}
