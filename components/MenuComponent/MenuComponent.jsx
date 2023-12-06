@@ -4,37 +4,20 @@ import Link from 'next/link';
 import { useRouter } from "next/router";
 
 export const MenuComponent = () => {
-    const router = useRouter();
-    let isHomepage = false;
-    let isAddArticle = false;
-
-    if (router.asPath === '/') {
-        isHomepage = true;
-    } else {
-        isHomepage = false;
-    }
-
-    if (router.asPath === '/new-article') {
-        isAddArticle = true;
-    } else {
-        isAddArticle = false;
-    }
+    const router = useRouter(); // https://nextjs.org/docs/pages/api-reference/functions/use-router
 
     return (
-        !isAddArticle && (
-            <div className={styles.header}>
-                <div className={styles.items}>
-                    {
-                        isHomepage ?
-                            (<>
-                                <Link href="/articles">Articles</Link>
-                                <Link href="/new-article">New article</Link></>
-                            ) :
-                            <Link href="/">Back to homepage</Link>
-                    }
-
-                </div>
+        <div className={styles.header}>
+            <div className={styles.items}>
+                {
+                    router.asPath === '/' ?
+                        (<>
+                            <Link href="/articles">Articole</Link>
+                            <Link href="/new-article">Articol nou</Link></>
+                        ) :
+                        <Link href="/">Inapoi la pagina de start</Link>
+                }
             </div>
-        )
+        </div>
     )
 }

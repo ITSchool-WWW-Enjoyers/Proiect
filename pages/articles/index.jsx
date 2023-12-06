@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArticlesComponent } from '../../components/ArticlesComponent/ArticlesComponent';
 
-export default function Posts() {
+export default function Articles() {
   return (<>
-    <h1>Posts</h1>
+    <h1>Articole</h1>
     <ArticlesComponent></ArticlesComponent>
   </>)
 }

@@ -2,7 +2,6 @@
     display: flex;
     gap: 3rem;
     flex-direction: row;
-    margin: 5rem;
     flex-wrap: wrap;
 }
 
@@ -24,14 +23,9 @@
 
 .postBody {
     font-style: italic;
+    font-size: 1rem;
 }
 
 .remove {
     float: right;
-}
-
-.loading {
-    font-size: 3rem;
-    display: flex;
-    justify-content: center;
 }

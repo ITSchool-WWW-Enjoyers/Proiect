@@ -16,7 +16,6 @@ export default function HomePage() {
                 <p><b>#3 Full-stack </b>(Web Developer) Un web developer pe full stack este cel care intelege ambele concepte si are cunostinte din ambele procese de creare ale unui site. El este cel care are cunostintele necesare pentru a construi un site complet (fara ajutorul unei alte persoane), de la A la Z.
                 Pentru asta e nevoie sa cunosti mai multe tehnologii, lucrul cu baze de date, front-end si back-end. E nevoie de o viziune de ansamblu, de a fi stapan pe tot ceea ce necesita web site-ul, nu la nivel de expert, insa la a fi capabil in lucrul cu acestea.</p>
             </div>
-            
         </>
     )
 
