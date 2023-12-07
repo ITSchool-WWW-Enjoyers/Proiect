@@ -101,7 +101,7 @@ const Converter = () => {
                     setValue(parsedValue / 2.54);
                     break;
                 case 'PX_REM':
-                    setValue(parsedValue / 0.063);
+                    setValue(parsedValue / 0.0625);
                     break;
             }
         }
