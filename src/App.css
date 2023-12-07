@@ -1,0 +1,204 @@
+#root{
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  background: linear-gradient(to right, #3B4371, #F3904F); 
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Architects Daughter", cursive;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  height: auto;
+  min-height: 14rem;
+  max-width: 35rem;
+  min-width: 32rem;
+  background: #ebe4d7;
+  background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png");
+  border-radius: 1rem;
+  box-shadow: 4px 3px 7px 2px #00000040;
+  padding: 3rem;
+  box-sizing: border-box;
+}
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block-end: 1rem;
+}
+.heading h1 {
+  transform: rotate(2deg);
+  padding: 0.2rem 1.2rem;
+  border-radius: 20% 5% 20% 5%/5% 20% 25% 20%; 
+  background: linear-gradient(to right, #f7b733, #fc4a1a);
+  color: white;
+  font-size: 1.5rem;
+}
+
+.logo{
+  width: 4rem;
+}
+
+.form input {
+  background-color: transparent;
+  padding: 0.2rem;
+  border:transparent;
+  border-bottom: dashed 0.18rem  rgb(238, 179, 123);
+  font-family: "Architects Daughter", cursive;
+  font-size: 1rem;
+  color: rgba(205, 109, 12, 0.874);
+  width: 60%;
+  outline: none;
+}
+
+::placeholder{
+  color: rgba(203, 117, 31, 0.374);
+}
+
+
+button {
+  padding: 0;
+  border: none;
+  font-family: "Architects Daughter", cursive;
+  border-radius: 0.3rem;
+  background-color:rgb(255, 210, 167);
+}
+
+button span {
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  background: linear-gradient(to right, #f7b733, #fc4a1a); 
+  color: white;
+  font-size: 1rem;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+
+.btn-group {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.list-container{
+  width: 100%;
+}
+
+.task-container{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.3rem;
+  background: linear-gradient(to right, #f7b733, #fc4a1a);
+  padding: 0.5rem;
+  color: white;
+  text-align: left;
+}
+
+
+.check-btn{
+  color: rgb(255, 223, 17);
+}
+
+.check-btn:active {
+  color: rgb(247, 255, 96);
+}
+
+.check-btn:hover {
+  color: rgb(247, 255, 96);
+}
+
+.edit-btn{
+  color: rgb(166, 68, 19);
+}
+
+.edit-btn:active{
+  color: rgb(255, 44, 7);
+}
+
+.edit-btn:hover{
+  color: rgb(255, 44, 7);
+}
+
+.delete-btn{
+  color: rgb(25, 100, 105);
+}
+
+.delete-btn:active{
+  color: rgb(37, 155, 163);
+}
+
+.delete-btn:hover{
+  color: rgb(37, 155, 163);
+}
+
+.edit-form input{
+  background-color: transparent;
+  padding: 0.2rem;
+  border:0.5rem transparent;
+  border-bottom: dashed 0.18rem rgb(238, 179, 123);
+  font-family: "Architects Daughter", cursive;
+  font-size: 1rem;
+  color: rgba(205, 109, 12, 0.874);
+  width: 83%;
+  outline: none;
+}
+
+@media (max-width: 520px) {
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    min-width: 17rem;
+    max-width: 19rem;
+    min-height: 20rem;
+    padding: 2rem;
+  }
+
+  .heading h1 {
+    font-size: 1rem;
+  }
+
+  .logo{
+    width: 2.5rem;
+  }
+
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .form input{
+    width: 70%;
+  }
+
+
+}
