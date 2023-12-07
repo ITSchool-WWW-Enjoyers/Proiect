@@ -6,7 +6,7 @@ const Converter = () => {
     const [toUnit, setToUnit] = useState('LBS');
     const [value, setValue] = useState('');
     const [result, setResult] = useState('');
-    const [currentConversion, setCurrentConversion] = useState('1');
+    const [currentConversion, setCurrentConversion] = useState('KG_LBS');
 
     const parseInputValue = (inputValue) => {
         return inputValue === '' ? NaN : parseFloat(inputValue);
@@ -73,7 +73,7 @@ const Converter = () => {
                     setResult(parsedValue * 2.54);
                     break;
                 case 'PX_REM':
-                    setResult(parsedValue * 0.063);
+                    setResult(parsedValue * 0.0625);
                     break;
             }
         }

@@ -5,9 +5,9 @@ import Converter from './components/converter';
 
 function App() {
 
-  const containerStyle = {
-  backgroundColor: '#e4ebf5' 
-  };
+ const containerStyle = {
+   backgroundColor: '#e4ebf5' 
+};
 
   return (
     <div className="App">
