@@ -31,7 +31,7 @@ export default function ViewTemplate({id, text, onDeleteTask, onShowEditingTempl
                     <RiDeleteBinLine 
                         className="delete-btn"
                         onClick={() => {
-                            onDeleteTask(id)
+                            onDeleteTask(id);
                         }}
                     />
                 </div>

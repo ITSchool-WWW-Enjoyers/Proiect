@@ -19,6 +19,7 @@ export default function EditingTemplate({id, previousTask, onEditTask, onHideEdi
                     <input 
                         onChange={handleChange}
                         type="text" 
+                        placeholder="Update Task"
                         value={newInputText}
                     />
                     <button 
