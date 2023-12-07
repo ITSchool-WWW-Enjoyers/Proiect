@@ -50,18 +50,16 @@ export default function App() {
   }
 
   return (
-    <> 
-      <div className="container">
-        <Heading/>
-        <InputArea 
-          addTask={addTask}
-        />
-        <TodoList 
-          tasks={tasks}
-          onDeleteTask={deleteTask}
-          onEditTask={editTask}
-        />
-      </div>
-    </>
+    <div className="container">
+      <Heading/>
+      <InputArea 
+        onAddTask={addTask}
+      />
+      <TodoList 
+        tasks={tasks}
+        onDeleteTask={deleteTask}
+        onEditTask={editTask}
+      />
+    </div>
   );
 }

@@ -12,32 +12,29 @@ export default function ViewTemplate({id, text, onDeleteTask, onShowEditingTempl
     }
 
     return (
-        <>
-            <div className="task-container">
-                <div style={{textDecoration: isDone ? "line-through red" : "none"}}>
-                    {text}
-                </div>
-                <div className='btn-group'>
-                    <FaRegCheckCircle
-                        className="check-btn"
-                        onClick={handleClick}
-                    />
-                    <FaRegEdit
-                        className="edit-btn"
-                        onClick={() => { 
-                            onShowEditingTemplate();
-                        }}
-                    />
-                    <RiDeleteBinLine 
-                        className="delete-btn"
-                        onClick={() => {
-                            onDeleteTask(id);
-                        }}
-                    />
-                </div>
+        <div className="task-container">
+            <div style={{textDecoration: isDone ? "line-through red" : "none"}}>
+                {text}
             </div>
-        </>
-
-    )
+            <div className='btn-group'>
+                <FaRegCheckCircle
+                    className="check-btn"
+                    onClick={handleClick}
+                />
+                <FaRegEdit
+                    className="edit-btn"
+                    onClick={() => { 
+                        onShowEditingTemplate();
+                    }}
+                />
+                <RiDeleteBinLine 
+                    className="delete-btn"
+                    onClick={() => {
+                        onDeleteTask(id);
+                    }}
+                />
+            </div>
+        </div>
+    );
 }
 
